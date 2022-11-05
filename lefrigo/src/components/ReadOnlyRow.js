@@ -15,8 +15,6 @@ const decreaseQuantity = () => {
     else
     {
         handleDeleteClick(aliment.id)
-        handleDeleteClick(aliment.nom)
-        handleDeleteClick(aliment.nombre)
     }
     
 }
