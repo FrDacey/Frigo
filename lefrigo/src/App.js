@@ -8,6 +8,18 @@ const App = () => {
 
   const [aliments, setaliments] = useState(data); // copie du master 
 
+  const [renderAliments, setRenderAliments] = useState(data) // Celui afficher
+  
+
+  /*.filter((value)=>{
+    if (search === ""){
+      return value;
+      } else if (value.nom.toLowerCase().includes(search.toLowerCase())){
+      return value;
+      }
+    })*/
+
+
 
   const [addFormData, setAddFormData] = useState({
     nom: '',
@@ -70,6 +82,9 @@ const [search, setSearch] = useState("");
 
 const updateSearch = e => {
   setSearch(e.target.value);
+  const found = aliments.find(aliment => {
+    renderAliments = (aliment.nom === search);
+  });
 }
 
   return (
@@ -91,13 +106,7 @@ const updateSearch = e => {
         </thead>
         <tbody>
           {
-            aliments.filter((value)=>{
-              if (search === ""){
-                return value;
-                } else if (value.nom.toLowerCase().includes(search.toLowerCase())){
-                return value;
-                }
-              }).map((aliment)=> (
+            renderAliments.map((aliment)=> (
             <ReadOnlyRow key={aliment.id.toString()} aliment={aliment} // That help react identifying row as unique
             handleDeleteClick={handleDeleteClick}/>
           ))}
