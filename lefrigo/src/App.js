@@ -6,12 +6,14 @@ import {nanoid} from 'nanoid'
 
 const App = () => {
 
-  const [aliments, setaliments] = useState(data);
-  
+  const [aliments, setaliments] = useState(data); // copie du master 
+
+
   const [addFormData, setAddFormData] = useState({
     nom: '',
     nombre: ''
   })
+  
 
   const handleAddFormChange = (event) => {
     event.preventDefault();
@@ -27,17 +29,33 @@ const App = () => {
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
 
-    const newAliment = {
-      id: nanoid(),
-      nom: addFormData.nom,
-      nombre: addFormData.nombre
-    };
+    /*if (addFormData.nom === aliments.nom)//condition if pour vérifier si il exist déjà
+    {
+      const Temporary = aliments(addFormData.nom,addFormData.nombre)
+      const RealTemporary = aliments(addFormData.nom === aliments.nom,addFormData.nombre === aliments.nombre)
+      aliments(aliments.nom).nombre =  aliments(aliments.nom).nombre + Temporary.nombre
 
+        
+        I want the nombre(a value basically) of addFormData.nom
+        I want to add it to the aliments.nom who got the same nom like addFormData
+        
+    }
+    else
+    {*/
+      const newAliment = {
+        id: nanoid(),
+        nom: addFormData.nom,
+        nombre: addFormData.nombre
+    }
     const newAliments = [...aliments, newAliment];
     setaliments(newAliments);
+    //};
+
+    
   };
 
   const handleDeleteClick = (alimentId) => {
+    console.log(alimentId)
     const newAliments =[...aliments];
     
     const index = aliments.findIndex((aliment)=> aliment.id === alimentId);
@@ -101,6 +119,7 @@ const updateSearch = e => {
           type ="number" 
           name="nombre" 
           required="required" 
+          min ="1"
           placeholder="Entrer un Nombre"
           onChange={handleAddFormChange}/>
 
