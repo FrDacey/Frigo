@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import aliments from '../App'
 const ReadOnlyRow = ({ aliment, handleDeleteClick}) => {
 
 const [quantity, setQuantity] = useState(aliment.nombre);
@@ -9,7 +8,7 @@ const increaseQuantity = () => {
 }
 
 const decreaseQuantity = () => {
-    if(quantity > 1){
+    if(aliment.nombre > 1){
         setQuantity(prevCount => prevCount - 1);
     }
     else
@@ -19,9 +18,10 @@ const decreaseQuantity = () => {
     
 }
     return (
-        <tr>
+        
+        <tr key={aliment.id.toString()}>
             <td>{aliment.nom}</td>
-            <td>{quantity} </td>
+            <td>{quantity}</td>
             <td>
                 <button type="button" onClick={()=> increaseQuantity(aliment.id)}>+</button>
                 <button type="button" onClick={()=> handleDeleteClick(aliment.id)}>Supprimer</button>
@@ -32,3 +32,4 @@ const decreaseQuantity = () => {
 }
 
 export default ReadOnlyRow
+

@@ -15,7 +15,6 @@ const App = () => {
 
   const handleAddFormChange = (event) => {
     event.preventDefault();
-
     const fieldName = event.target.getAttribute("name");
     const fieldValue = event.target.value;
 
@@ -38,12 +37,6 @@ const App = () => {
     setaliments(newAliments);
   };
 
-  const [search, setSearch] = useState("");
-
-  const updateSearch = e =>{
-    setSearch(e.target.value)
-  }
-
   const handleDeleteClick = (alimentId) => {
     const newAliments =[...aliments];
     
@@ -55,17 +48,21 @@ const App = () => {
 }
 
 
+const [search, setSearch] = useState("");
 
-
+const updateSearch = e => {
+  setSearch(e.target.value);
+}
 
   return (
     <div className="App">
       <h1>Frigo</h1>
       <form className="search-form">
-        <input className="search-bar" type="text" value={search} onChange={updateSearch}/>
+        <input className="search-bar" type="text" value={search} onChange={updateSearch} />
         <button className="search-button" type="submit">
-        Rechercher
+          Rechercher
         </button>
+
       </form>
     <form>
       <table>
@@ -75,10 +72,18 @@ const App = () => {
           <th>Actions</th>
         </thead>
         <tbody>
-          {aliments.map((aliment)=> (
-            <ReadOnlyRow aliment={aliment}
+          {
+            aliments.filter((value)=>{
+              if (search === ""){
+                return value;
+                } else if (value.nom.toLowerCase().includes(search.toLowerCase())){
+                return value;
+                }
+              }).map((aliment)=> (
+            <ReadOnlyRow key={aliment.id.toString()} aliment={aliment} // That help react identifying row as unique
             handleDeleteClick={handleDeleteClick}/>
           ))}
+
         </tbody>
       </table>
       
@@ -93,7 +98,7 @@ const App = () => {
           onChange={handleAddFormChange}/>
 
           <input 
-          type ="text" 
+          type ="number" 
           name="nombre" 
           required="required" 
           placeholder="Entrer un Nombre"
