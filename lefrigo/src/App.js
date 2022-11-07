@@ -3,7 +3,8 @@ import "./App.css";
 import data from "./inventory.json"
 import ReadOnlyRow from "./components/ReadOnlyRow"
 import {nanoid} from 'nanoid'
-
+import Formulaire from "./components/Formulaire";
+import {NavLink} from "react-router-dom";
 
 /* Chronologie Organisation Code : 
 1er-States
@@ -20,6 +21,7 @@ const App = () => {
   const [errorFindAliment, setErrorFindAliment] = useState(false) // permet de rien afficher :> 
 
   const [search, setSearch] = useState("");
+  
   
 
 
@@ -81,38 +83,47 @@ const App = () => {
     newFormData[fieldName] = fieldValue;
 
     setAddFormData(newFormData);
+    
   }
 
   const handleAddFormSubmit = (event) => {
     event.preventDefault();
 
-    const found = aliments.find(element => {
-      return element.id === addFormData.nom;
+  const newAliment = {
+    id: nanoid(),
+    nom: addFormData.nom,
+    nombre: Number(addFormData.nombre)
+    }
+
+    const newAliments = [...aliments, newAliment];
+
+    const found = aliments.find(aliment => {
+      return aliment.nom === addFormData.nom;
     });
+    
 
-    if ( found = true )// Verification de l'existance de l'aliment, si vrai alors ajout des valeurs dans alimentDejaExistant  // Si il existe alors il faut rajouter les nouvelles valeurs a alimentDejaExistant sinon il y a création de l'aliment
+    
+    if (found)// Verification de l'existance de l'aliment, si vrai alors ajout des valeurs dans alimentDejaExistant  // Si il existe alors il faut rajouter les nouvelles valeurs a alimentDejaExistant sinon il y a création de l'aliment
     {
+      const copyMaster = [...aliments].map(elt => {
+        if(elt.nom === addFormData.nom){
+          elt.nombre = Number(elt.nombre) + Number(addFormData.nombre)
+          console.log(elt.nombre)
+          return elt
+        } else {
+          return elt
+        }})
 
-      //aliments.nom(addFormData.nom) = event.nombre(addFormData.nom) + addFormData.nombre
-      /*const Temporary = aliments(addFormData.nom,addFormData.nombre)
-      const RealTemporary = aliments(addFormData.nom === aliments.nom,addFormData.nombre === aliments.nombre)
-      aliments(aliments.nom).nombre =  aliments(aliments.nom).nombre + Temporary.nombre
-      alimentDejaExistant = alimentDejaExistant + alimentCreer */
-      
-       
         
+      setaliments(copyMaster)
+      setRenderAliments(copyMaster) 
+      console.log(copyMaster)
     }
     else
     {
-      const newAliment = {
-        id: nanoid(),
-        nom: addFormData.nom,
-        nombre: addFormData.nombre
-    }
-    const newAliments = [...aliments, newAliment];
-    setaliments(newAliments);
+      setaliments(newAliments); // Ajout aliment
+      setRenderAliments(newAliments); // on ré injecte le master dans le state render
     };
-
     
   };
 
@@ -132,7 +143,7 @@ const App = () => {
       <table>
         <thead>
           <th>Nom</th>
-          <th>Nombre</th>
+          <th>Quantité</th>
           <th>Actions</th>
         </thead>
         <tbody>
@@ -165,6 +176,7 @@ const App = () => {
 
           <button type="submit">Ajouter</button>
         </form>
+      
     </div>
     
   );
@@ -172,3 +184,4 @@ const App = () => {
 
 export default App;
 
+//        <NavLink to="/Formulaire">Ajouter Aliment</NavLink>
