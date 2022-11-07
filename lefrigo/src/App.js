@@ -1,3 +1,17 @@
+  //------------------------------------------------------------//
+  //                        Information                         //
+  //------------------------------------------------------------//
+  //  Nom Projet : Frigo                                        //
+  //  Objectif : Afficher des aliments du frigo.                //
+  //             Modification et ajout d'aliments possible      //
+  //                                                            //
+  //  Date Création : 05/11/2022                                //
+  //  Créateur : Samuel ADAMEK                                  //
+  //------------------------------------------------------------//
+
+  //------------------------------------------------------------//
+  //                  Initialisation Imports                    //
+  //------------------------------------------------------------//
 import React, { useState } from 'react';
 import "./App.css";
 import data from "./inventory.json"
@@ -14,16 +28,23 @@ import {BrowserRouter as Router,Switch, Route, Link} from "react-router-dom";
 */
 
 const App = () => {
+  //------------------------------------------------------------//
+  //                  Initialisation States                     //
+  //------------------------------------------------------------//
 
   const [aliments, setaliments] = useState(data); // copie du master 
-
   const [renderAliments, setRenderAliments] = useState(data) // Celui afficher
-
   const [errorFindAliment, setErrorFindAliment] = useState(false) // permet de rien afficher :> 
-
   const [search, setSearch] = useState("");
   
-  
+  //------------------------------------------------------------//
+  //                Initialisation UseEffect                    //
+  //------------------------------------------------------------//
+
+  //------------------------------------------------------------//
+  //                 Initialisation Fonction                    //
+  //------------------------------------------------------------//
+
   const increaseQuantity = (alimentId) => {
     
     const newAliments =[...aliments];
@@ -32,7 +53,6 @@ const App = () => {
     
     newAliments[index].nombre += 1
     
-
     setaliments(newAliments)
     setRenderAliments(newAliments)
     }
@@ -43,30 +63,32 @@ const App = () => {
     const newAliments =[...aliments];
     const index = aliments.findIndex((aliment)=> aliment.id === alimentId)
 
-
       if(newAliments[index].nombre > 1){
 
         newAliments[index].nombre -= 1
-
+      setaliments(newAliments)
+      setRenderAliments(newAliments)
       }
       else
       {
-          handleDeleteClick(alimentId)
-          console.log("Should be deleted")
+        handleDeleteClick(alimentId)
+        //console.log("Should be deleted")
+
       } 
-      console.log(newAliments)
-    setaliments(newAliments)
-    setRenderAliments(newAliments)
+    
 }
 
+
   const handleDeleteClick = (alimentId) => {
-    
+    console.log(alimentId)
+
     const newAliments =[...aliments];
     
     const index = aliments.findIndex((aliment)=> aliment.id === alimentId);
 
     newAliments.splice(index, 1);
 
+    //console.log(newAliments)
 
     /* on met a jour le state pour le render mais également le state Master */
     setRenderAliments(newAliments);
@@ -164,6 +186,11 @@ const App = () => {
     
   };
 
+
+  //------------------------------------------------------------//
+  //                 Initialisation Affichage                   //
+  //------------------------------------------------------------//
+
   return (
     <div className="App">
       <h1>Frigo</h1>
@@ -189,8 +216,7 @@ const App = () => {
             <ReadOnlyRow key={aliment.id.toString()} aliment={aliment} // That help react identifying row as unique
             handleDeleteClick={handleDeleteClick}
             increaseQuantity={increaseQuantity} 
-            decreaseQuantity={decreaseQuantity}
-              />
+            decreaseQuantity={decreaseQuantity}/>
           ))}
 
         </tbody>
@@ -216,7 +242,6 @@ const App = () => {
 
           <button type="submit">Ajouter</button>
         </form>
-      
     </div>
     
   );
