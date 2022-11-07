@@ -1,20 +1,12 @@
-import React, { useState } from 'react';
-const ReadOnlyRow = ({ aliment, handleDeleteClick}) => {
-const [quantity, setQuantity] = useState(aliment.nombre);
+import React, { useState, useEffect } from 'react';
+const ReadOnlyRow = ({ aliment, handleDeleteClick, increaseQuantity, decreaseQuantity}) => {
 
-const increaseQuantity = () => {
-    setQuantity(prevCount => prevCount + 1);
-}
+const [quantity, setQuantity] = useState(0);
 
-const decreaseQuantity = () => {
-    if(quantity > 1){
-        setQuantity(prevCount => prevCount - 1);
-    }
-    else
-    {
-        handleDeleteClick(aliment.id)
-    }
-}
+useEffect(() => {
+
+    setQuantity(aliment.nombre)
+})
     return (
         
         <tr key={aliment.id.toString()}>

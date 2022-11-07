@@ -3,8 +3,9 @@ import "./App.css";
 import data from "./inventory.json"
 import ReadOnlyRow from "./components/ReadOnlyRow"
 import {nanoid} from 'nanoid'
+
 import Formulaire from "./components/Formulaire";
-import {NavLink} from "react-router-dom";
+import {BrowserRouter as Router,Switch, Route, Link} from "react-router-dom";
 
 /* Chronologie Organisation Code : 
 1er-States
@@ -23,13 +24,46 @@ const App = () => {
   const [search, setSearch] = useState("");
   
   
+  const increaseQuantity = (alimentId) => {
+    
+    const newAliments =[...aliments];
 
+    const index = newAliments.findIndex((aliment)=> aliment.id === alimentId)
+    
+    newAliments[index].nombre += 1
+    
+
+    setaliments(newAliments)
+    setRenderAliments(newAliments)
+    }
+
+
+  const decreaseQuantity = (alimentId) => {
+
+    const newAliments =[...aliments];
+    const index = aliments.findIndex((aliment)=> aliment.id === alimentId)
+
+
+      if(newAliments[index].nombre > 1){
+
+        newAliments[index].nombre -= 1
+
+      }
+      else
+      {
+          handleDeleteClick(alimentId)
+          console.log("Should be deleted")
+      } 
+      console.log(newAliments)
+    setaliments(newAliments)
+    setRenderAliments(newAliments)
+}
 
   const handleDeleteClick = (alimentId) => {
     
     const newAliments =[...aliments];
     
-    const index = renderAliments.findIndex((aliment)=> aliment.id === alimentId);
+    const index = aliments.findIndex((aliment)=> aliment.id === alimentId);
 
     newAliments.splice(index, 1);
 
@@ -95,7 +129,7 @@ const App = () => {
     nombre: Number(addFormData.nombre)
     }
 
-    const newAliments = [...aliments, newAliment];
+    //const newAliments = [...aliments, newAliment]; // initialiser trop tot pour rien ! -> dans le else c'est mieux :> 
 
     const found = aliments.find(aliment => {
       return aliment.nom === addFormData.nom;
@@ -105,6 +139,7 @@ const App = () => {
     
     if (found)// Verification de l'existance de l'aliment, si vrai alors ajout des valeurs dans alimentDejaExistant  // Si il existe alors il faut rajouter les nouvelles valeurs a alimentDejaExistant sinon il y a création de l'aliment
     {
+      
       const copyMaster = [...aliments].map(elt => {
         if(elt.nom === addFormData.nom){
           elt.nombre = Number(elt.nombre) + Number(addFormData.nombre)
@@ -121,6 +156,8 @@ const App = () => {
     }
     else
     {
+      const newAliments = [...aliments, newAliment];
+      
       setaliments(newAliments); // Ajout aliment
       setRenderAliments(newAliments); // on ré injecte le master dans le state render
     };
@@ -150,7 +187,10 @@ const App = () => {
           {
             renderAliments.map((aliment)=> (
             <ReadOnlyRow key={aliment.id.toString()} aliment={aliment} // That help react identifying row as unique
-            handleDeleteClick={handleDeleteClick}/>
+            handleDeleteClick={handleDeleteClick}
+            increaseQuantity={increaseQuantity} 
+            decreaseQuantity={decreaseQuantity}
+              />
           ))}
 
         </tbody>
@@ -184,4 +224,40 @@ const App = () => {
 
 export default App;
 
-//        <NavLink to="/Formulaire">Ajouter Aliment</NavLink>
+/*  
+export default function App() {
+  return (
+<Router>
+  <div>
+    <nav>
+      <ul>
+        <li>
+          <Link to="/">Frigo</Link>
+        </li>
+        <li>
+          <Link to="/Formulaire">Ajouter Aliment</Link>
+        </li>
+      </ul>
+    </nav>
+    <Switch>
+      <Route path="/Formulaire">
+        <Formulaire />
+      </Route>
+      <Route path="/">
+        <Frigo />
+      </Route>
+    </Switch>
+  </div>
+</Router>
+);
+
+  }
+function Home() {
+  return <h2>Home</h2>;
+}
+
+function About() {
+  return <h2>About</h2>;
+}
+
+*/
