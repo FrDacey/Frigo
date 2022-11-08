@@ -1,4 +1,4 @@
-import React , {useState} from 'react'
+/*import React , {useState} from 'react'
 import {nanoid} from 'nanoid'
 import {addFormData} from '../App'
 import data from "../inventory.json"
@@ -96,4 +96,4 @@ function Formulaire(){
     )
 }
 
-export default Formulaire
+export default Formulaire*/

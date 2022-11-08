@@ -18,8 +18,7 @@ import data from "./inventory.json"
 import ReadOnlyRow from "./components/ReadOnlyRow"
 import {nanoid} from 'nanoid'
 
-import Formulaire from "./components/Formulaire";
-import {BrowserRouter as Router,Switch, Route, Link} from "react-router-dom";
+
 
 /* Chronologie Organisation Code : 
 1er-States
