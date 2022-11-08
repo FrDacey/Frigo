@@ -1,10 +1,9 @@
-/*import React , {useState} from 'react'
+import React , {useState} from 'react'
 import {nanoid} from 'nanoid'
-import {addFormData} from '../App'
 import data from "../inventory.json"
+import { Link } from 'react-router-dom'
 
 function Formulaire(){
-
     const [aliments, setaliments] = useState(data); // copie du master 
 
     const [renderAliments, setRenderAliments] = useState(data) // Celui afficher
@@ -72,7 +71,13 @@ function Formulaire(){
       }
 
     return (
+      
     <div>
+      <nav>
+        <h1>Retourner dans le Frigo.</h1>
+        <Link to="/">Frigo</Link>
+    </nav>
+    
       <h2>Add Aliment </h2>
         <form onSubmit={handleAddFormSubmit}>
           <input 
@@ -92,8 +97,10 @@ function Formulaire(){
 
           <button type="submit">Ajouter</button>
         </form>
+        
     </div>
+    
     )
-}
+    }
 
-export default Formulaire*/
+export default Formulaire
