@@ -1,19 +1,22 @@
 import React , {useState} from 'react'
 import {nanoid} from 'nanoid'
-import data from "../inventory.json"
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import "../App.css";
 
 function Formulaire(){
-    const [aliments, setaliments] = useState(data); // copie du master 
-
-    const [renderAliments, setRenderAliments] = useState(data) // Celui afficher
+    const location=useLocation();
+    //console.log(location)
+    const [aliments, setaliments] = useState(location.state.master); // copie du master 
+    console.log(aliments)
+    
 
     const [addFormData, setAddFormData] = useState({
         nom: '',
         nombre: ''
-      })
+      }) // Sauvegarde le nouvelle Element Creer sous cette forme
     const navigate = useNavigate();
+
+    
 
     const handleAddFormSubmit = (event) => {
         event.preventDefault();
@@ -47,7 +50,6 @@ function Formulaire(){
     
             
           setaliments(copyMaster)
-          setRenderAliments(copyMaster) 
           console.log(copyMaster)
         }
         else
@@ -55,7 +57,6 @@ function Formulaire(){
           const newAliments = [...aliments, newAliment];
           
           setaliments(newAliments); // Ajout aliment
-          setRenderAliments(newAliments); // on ré injecte le master dans le state render
         };
         navigate("/",)
       };
@@ -97,7 +98,8 @@ function Formulaire(){
           placeholder="Entrer un Nombre"
           onChange={handleAddFormChange}/>
 
-          <button type="submit">Ajouter</button>
+          <button type="button" onClick={() => navigate('/',{ state : { master : aliments}})}>Ajouter</button>
+
         </form>
         
     </div>
