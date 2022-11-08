@@ -17,7 +17,6 @@
   import "../App.css";
   import data from "../inventory.json"
   import ReadOnlyRow from "../components/ReadOnlyRow"
-  import {nanoid} from 'nanoid'
   import { Link } from 'react-router-dom';
   
   

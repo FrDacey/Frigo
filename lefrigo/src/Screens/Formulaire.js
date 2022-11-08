@@ -1,7 +1,7 @@
 import React , {useState} from 'react'
 import {nanoid} from 'nanoid'
 import data from "../inventory.json"
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import "../App.css";
 
 function Formulaire(){
@@ -13,6 +13,7 @@ function Formulaire(){
         nom: '',
         nombre: ''
       })
+    const navigate = useNavigate();
 
     const handleAddFormSubmit = (event) => {
         event.preventDefault();
@@ -56,7 +57,7 @@ function Formulaire(){
           setaliments(newAliments); // Ajout aliment
           setRenderAliments(newAliments); // on ré injecte le master dans le state render
         };
-        
+        navigate("/",)
       };
 
       const handleAddFormChange = (event) => {
