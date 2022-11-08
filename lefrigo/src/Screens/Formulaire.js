@@ -8,13 +8,12 @@ function Formulaire(){
     //console.log(location)
     const [aliments, setaliments] = useState(location.state.master); // copie du master 
     console.log(aliments)
-    
-
+    const navigate = useNavigate();
     const [addFormData, setAddFormData] = useState({
         nom: '',
         nombre: ''
       }) // Sauvegarde le nouvelle Element Creer sous cette forme
-    const navigate = useNavigate();
+    
 
     
 
@@ -41,7 +40,7 @@ function Formulaire(){
           
           const copyMaster = [...aliments].map(elt => {
             if(elt.nom === addFormData.nom){
-              elt.nombre = Number(elt.nombre) + Number(addFormData.nombre)
+              elt.nombre = Number(elt.nombre) + Number(addFormData.nombre) 
               console.log(elt.nombre)
               return elt
             } else {
@@ -50,6 +49,7 @@ function Formulaire(){
     
             
           setaliments(copyMaster)
+          console.log("copyMaster")
           console.log(copyMaster)
         }
         else
@@ -58,7 +58,10 @@ function Formulaire(){
           
           setaliments(newAliments); // Ajout aliment
         };
-        navigate("/",)
+        console.log("aliments")
+        console.log(aliments)
+        navigate("/")
+        
       };
 
       const handleAddFormChange = (event) => {
@@ -81,7 +84,7 @@ function Formulaire(){
         <Link to="/">Frigo</Link>
     </nav>
     
-      <h2>Add Aliment </h2>
+      <h2>Ajouter un aliment  </h2>
         <form onSubmit={handleAddFormSubmit}>
           <input 
           type ="text" 

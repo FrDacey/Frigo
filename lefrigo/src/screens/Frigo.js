@@ -40,12 +40,13 @@
     const navigate = useNavigate()
 
     useEffect(() =>{ 
+
       const getData = async () =>{
         setaliments(location.state.master)
         setRenderAliments(location.state.master)
       }
       getData();
-      console.log(location)
+      //console.log(location)
     },[location])
   
 
