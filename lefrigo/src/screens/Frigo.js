@@ -32,14 +32,43 @@
     //                  Initialisation States                     //
     //------------------------------------------------------------//
     const [aliments, setaliments] = useState(data); // copie du master 
-  
     const [renderAliments, setRenderAliments] = useState(data) // Celui afficher
-  
     const [errorFindAliment, setErrorFindAliment] = useState(false) // permet de rien afficher :> 
-  
     const [search, setSearch] = useState("");
     
+
+    const increaseQuantity = (alimentId) => {
     
+      const newAliments =[...aliments];
+  
+      const index = newAliments.findIndex((aliment)=> aliment.id === alimentId)
+      
+      newAliments[index].nombre += 1
+      
+      setaliments(newAliments)
+      setRenderAliments(newAliments)
+      }
+  
+  
+    const decreaseQuantity = (alimentId) => {
+  
+      const newAliments =[...aliments];
+      const index = aliments.findIndex((aliment)=> aliment.id === alimentId)
+  
+        if(newAliments[index].nombre > 1){
+  
+          newAliments[index].nombre -= 1
+        setaliments(newAliments)
+        setRenderAliments(newAliments)
+        }
+        else
+        {
+          handleDeleteClick(alimentId)
+          //console.log("Should be deleted")
+  
+        } 
+      
+  }
   
   
     const handleDeleteClick = (alimentId) => {
@@ -56,6 +85,7 @@
       setaliments(newAliments)
       }
   
+
       const updateSearch = e => {
   
         // A la suppression de tous les caractères, on ré injecte le master dans le state render
@@ -66,6 +96,7 @@
         setSearch(e.target.value);
       }
   
+
       const handleSubmitSearch = (e) => {
   
         // On stop le rafraichissement de la page (comportement par défault du submit)
@@ -84,14 +115,7 @@
         }
     
       }
-  
-  
-    
-  
-    
-  
-  
-  
+
     return (
   
   
@@ -119,11 +143,12 @@
           </thead>
           <tbody>
             {
-              renderAliments.map((aliment, index)=> (
-                <ReadOnlyRow key={index} aliment={aliment} handleDeleteClick={handleDeleteClick} />
-              ))
-            }
-  
+            renderAliments.map((aliment)=> (
+              <ReadOnlyRow key={aliment.id.toString()} aliment={aliment} // That help react identifying row as unique
+              handleDeleteClick={handleDeleteClick}
+              increaseQuantity={increaseQuantity} 
+              decreaseQuantity={decreaseQuantity}/>
+            ))}  
           </tbody>
         </table>
         

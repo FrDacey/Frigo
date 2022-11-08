@@ -2,6 +2,7 @@ import React , {useState} from 'react'
 import {nanoid} from 'nanoid'
 import data from "../inventory.json"
 import { Link } from 'react-router-dom'
+import "../App.css";
 
 function Formulaire(){
     const [aliments, setaliments] = useState(data); // copie du master 
