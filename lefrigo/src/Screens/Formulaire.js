@@ -1,13 +1,13 @@
 import React , {useState} from 'react'
 import {nanoid} from 'nanoid'
-import { Link, useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import "../App.css";
 
 function Formulaire(){
     const location=useLocation();
     //console.log(location)
     const [aliments, setaliments] = useState(location.state.master); // copie du master 
-    console.log(aliments)
+    //console.log(aliments)
     const navigate = useNavigate();
     const [addFormData, setAddFormData] = useState({
         nom: '',
@@ -41,26 +41,24 @@ function Formulaire(){
           const copyMaster = [...aliments].map(elt => {
             if(elt.nom === addFormData.nom){
               elt.nombre = Number(elt.nombre) + Number(addFormData.nombre) 
-              console.log(elt.nombre)
+              //console.log(elt.nombre)
               return elt
             } else {
               return elt
             }})
     
             
-          setaliments(copyMaster)
-          console.log("copyMaster")
-          console.log(copyMaster)
+          //setaliments(copyMaster)
+            navigate('/', { state : { master:copyMaster}, replace : true})
         }
         else
         {
           const newAliments = [...aliments, newAliment];
           
-          setaliments(newAliments); // Ajout aliment
+          //setaliments(newAliments); // Ajout aliment
+          navigate('/', { state : { master:newAliments}, replace : true})
         };
-        console.log("aliments")
-        console.log(aliments)
-        navigate("/")
+        //navigate("/")
         
       };
 
@@ -79,11 +77,6 @@ function Formulaire(){
     return (
       
     <div>
-      <nav>
-        <h1>Retourner dans le Frigo.</h1>
-        <Link to="/">Frigo</Link>
-    </nav>
-    
       <h2>Ajouter un aliment  </h2>
         <form onSubmit={handleAddFormSubmit}>
           <input 
@@ -101,7 +94,7 @@ function Formulaire(){
           placeholder="Entrer un Nombre"
           onChange={handleAddFormChange}/>
 
-          <button type="button" onClick={() => navigate('/',{ state : { master : aliments}})}>Ajouter</button>
+          <button type="submit" onClick={handleAddFormSubmit}>Ajouter</button>
 
         </form>
         

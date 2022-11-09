@@ -40,14 +40,12 @@
     const navigate = useNavigate()
 
     useEffect(() =>{ 
-
-      const getData = async () =>{
+      if(location.state){
         setaliments(location.state.master)
         setRenderAliments(location.state.master)
-      }
-      getData();
       //console.log(location)
-    },[location])
+      }
+    },[location.state])
   
 
     const increaseQuantity = (alimentId) => { // Ajoute 1 à la l'élément concercer
@@ -147,7 +145,7 @@
         </table>
       </form> 
       <h1>Ajouter Un Aliment</h1>
-      <button onClick={() => navigate('/Formulaire',{ state : { master : aliments}})}>Ajouter un Aliment</button>
+      <button onClick={() => navigate('/Formulaire',{ state : { master : aliments , replace : true}})}>Ajouter un Aliment</button>
     </div>
       
     );
