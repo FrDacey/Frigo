@@ -39,7 +39,7 @@
     const [search, setSearch] = useState("");
     const navigate = useNavigate()
 
-    useEffect(() =>{ 
+    useEffect(() =>{ //Permet d'eviter de faire une loop infini et donc de faire planter le site et l'affichage.
       if(location.state){
         setaliments(location.state.master)
         setRenderAliments(location.state.master)
@@ -48,7 +48,7 @@
     },[location.state])
   
 
-    const increaseQuantity = (alimentId) => { // Ajoute 1 à la l'élément concercer
+    const increaseQuantity = (alimentId) => { // Ajoute 1 à la l'élément concercer 
     
       const newAliments =[...aliments];
       const index = newAliments.findIndex((aliment)=> aliment.id === alimentId)
@@ -77,7 +77,7 @@
     }
   
   
-    const handleDeleteClick = (alimentId) => {
+    const handleDeleteClick = (alimentId) => { // Permet la suppresion d'une ligne de tableau.
       
       const newAliments =[...aliments];
       const index = renderAliments.findIndex((aliment)=> aliment.id === alimentId);
@@ -97,7 +97,7 @@
     }
   
 
-    const handleSubmitSearch = (e) => {
+    const handleSubmitSearch = (e) => { // Permet d'effectuer la recherche dans le tableau.
         e.preventDefault() // On stop le rafraichissement de la page (comportement par défault du submit)
         const aliment = aliments.find(elt => elt.nom.toLowerCase() === search.toLowerCase()) // On recherche dans le Master l'element en fonction du texte de l'input (Et on met les string en minuscule)
         if(aliment){ // Si il y a un résultat, on injecte l'element dans le State Render, si non on peut ajouter une erreur avec un else
@@ -113,19 +113,19 @@
   
   
     <div className="App">
-  
+  {/*Ceci est un commentaire*/}
       <h1>Frigo</h1>
-        <form className="search-form" onSubmit={handleSubmitSearch}>
+        <form className="search-form" onSubmit={handleSubmitSearch}> 
           <input className="search-bar" type="text" value={search} onChange={updateSearch} />
-          <button className="search-button" type="submit">
+          <button className="search-button" type="submit"> {/*Création du bouton et de la barre de recherche*/}
             Rechercher
           </button>
         </form>
-        {errorFindAliment &&
+        {errorFindAliment && 
           <h2>Aucun résultat</h2>
-        }
+        }{/*Affichage d'aucun résultat si true. */}
       <form>
-        <table>
+        <table>{/*Création du tableau*/}
           <thead>
             <tr>
               <th>Nom</th>
@@ -139,13 +139,13 @@
               <ReadOnlyRow key={aliment.id.toString()} aliment={aliment} // Permet d'identifier les lignes avec une clé unique. (Tous différent)
               handleDeleteClick={handleDeleteClick}
               increaseQuantity={increaseQuantity} 
-              decreaseQuantity={decreaseQuantity}/>
-            ))}  
+              decreaseQuantity={decreaseQuantity}/> 
+            ))}  {/*Envoie en props des élément concernant le tableau*/}
           </tbody>
         </table>
       </form> 
       <h1>Ajouter Un Aliment</h1>
-      <button onClick={() => navigate('/Formulaire',{ state : { master : aliments , replace : true}})}>Ajouter un Aliment</button>
+      <button onClick={() => navigate('/Formulaire',{ state : { master : aliments , replace : true}})}>Ajouter un Aliment</button>{/*Lors de la pression du bouton, Envoie sur la page Formulaire, la Data permettant ducoup de pouvoir modifier la donnée et la renvoyé*/}
     </div>
       
     );
