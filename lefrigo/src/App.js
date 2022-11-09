@@ -10,8 +10,8 @@
   //------------------------------------------------------------//
 import React from 'react';
 import { Routes, Route } from 'react-router-dom'
-import Legume from './screens/Frigo'
-import Formulaire from './screens/Formulaire';
+import Legume from './Screens/Frigo'
+import Formulaire from './Screens/Formulaire';
 
 
 const App = () => {
